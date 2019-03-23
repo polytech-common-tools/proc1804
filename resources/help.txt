@@ -1,0 +1,7 @@
+===========================H=E=L=P===============================
+=             help/h - to print help message                    =
+=   stateHistory/sh - to print the processor registers values   =
+=       state/s - to print the processor registers values       =
+=            clk/c - to make 1 step of processor                =
+=               exit/e - to stop the program                    =
+=================================================================
