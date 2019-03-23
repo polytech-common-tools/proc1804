@@ -198,12 +198,12 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         System.arraycopy(other.regs, 0, this.regs, 0, this.regs.length);
     }
 
-    public T increment(Flags flags) {
-        return add(createInstance(), true, flags);
+    public void increment(Flags flags) {
+        this.regs = add(createInstance(), true, flags).regs;
     }
 
-    public T decrement(Flags flags) {
-        return sub(createInstance(), false, flags);
+    public void decrement(Flags flags) {
+        this.regs = sub(createInstance(), false, flags).regs;
     }
 
     public T reverse() {
