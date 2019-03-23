@@ -51,7 +51,7 @@ public final class CoolWriter implements StateWriter {
                     builder.append(state.getQ());
                     break;
                 case NEXTADDR:
-                    builder.append(state.getNextAddress());
+                    builder.append(String.format("%4d", state.getNextAddress().toLong()));
                     break;
                 case OVR:
                     builder.append(state.getFlags().isOVR() ? " 1 " : " 0 ");
@@ -101,7 +101,7 @@ public final class CoolWriter implements StateWriter {
                 else builder.append("+");
                 switch (printableValue) {
                     case N:
-                        if (lineNum == 1) builder.append(String.format("%4s", "#"));
+                        if (lineNum == 1) builder.append(String.format("%4s", "clk"));
                         else builder.append("----");
                         break;
                     case Y:
@@ -118,8 +118,8 @@ public final class CoolWriter implements StateWriter {
                         else builder.append("---");
                         break;
                     case NEXTADDR:
-                        if (lineNum == 1) builder.append("nextaddr");
-                        else builder.append("--------");
+                        if (lineNum == 1) builder.append("addr");
+                        else builder.append("----");
                         break;
                     case SP:
                         if (lineNum == 1) builder.append(String.format("%2s", "SP"));
@@ -173,7 +173,7 @@ public final class CoolWriter implements StateWriter {
                     builder.append("---");
                     break;
                 case NEXTADDR:
-                    builder.append("--------");
+                    builder.append("----");
                     break;
                 case SP:
                     builder.append("--");
