@@ -136,7 +136,8 @@ public final class CoolWriter implements StateWriter {
                     }
                 }
             }
-            builder.append("|\n");
+            if (lineNum == 1) builder.append("|\n");
+            else builder.append("+\n");
         }
         return builder.toString();
     }
@@ -187,7 +188,7 @@ public final class CoolWriter implements StateWriter {
                 }
             }
         }
-        builder.append("|\n");
+        builder.append("+\n");
         return builder.toString();
     }
 
