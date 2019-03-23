@@ -22,7 +22,7 @@ public final class RegistersMemoryUnit {
      * @param value   saving register
      */
     public void save(@NonNull Register4 address, @NonNull Register4 value) {
-        regs[(int) address.toLong()] = value;
+        regs[(int) address.toLong()] = value.copy();
     }
 
     /**
