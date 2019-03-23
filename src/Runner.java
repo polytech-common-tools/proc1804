@@ -42,6 +42,7 @@ public class Runner {
         String line;
         System.out.println(welcome);
         System.out.println(help);
+        System.out.print("command: ");
         while (!("exit".equals(line = scanner.nextLine()) || "e".equals(line))) {
             if ("help".equals(line) || "h".equals(line)) {
                 System.out.println("<--- help");
@@ -65,6 +66,7 @@ public class Runner {
             } else {
                 System.out.println("<--- NO command");
             }
+            System.out.print("command: ");
         }
         System.out.println("<--- exit");
         stateWriter.writeHeader();
