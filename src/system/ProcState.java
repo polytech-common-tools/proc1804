@@ -54,7 +54,7 @@ public final class ProcState {
         final AddressUnit addressUnit = (AddressUnit) addressUnitField.get(processor);
         final Field nextAddress = addressUnit.getClass().getDeclaredField("nextAddress");
         nextAddress.setAccessible(true);
-        state.nextAddress = (Register8) nextAddress.get(addressUnit);
+        state.nextAddress = ((Register8) nextAddress.get(addressUnit)).copy();
 
         final Field flags = clazz.getDeclaredField("flags");
         flags.setAccessible(true);
