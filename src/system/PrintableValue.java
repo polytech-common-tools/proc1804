@@ -6,9 +6,11 @@ import java.util.*;
  * REGS and REG<INDEX>
  * FLAGS and FLAG<INDEX>
  * STACKS and STACK<INDEX> cannot be used together
+ *
+ * N for clk number
  */
 public enum PrintableValue {
-    Y, F, Q, NEXTADDR, FLAGS, OVR, C4, F3, Z,
+    N, Y, F, Q, NEXTADDR, FLAGS, OVR, C4, F3, Z,
     REGS, REG0, REG1, REG2, REG3, REG4, REG5, REG6, REG7, REG8, REG9, REG10, REG11, REG12, REG13, REG14, REG15,
     STACKS, STACK0, STACK1, STACK2, STACK3,
     SP;

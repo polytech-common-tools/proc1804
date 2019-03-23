@@ -24,6 +24,7 @@ public final class ProcState {
     private Stack stack;
     private int sp;
     private Register8[] stackArray;
+    private int clkCounter;
 
     private ProcState() {
     }
@@ -82,9 +83,13 @@ public final class ProcState {
         state.sp = sp;
         state.stackArray = stackArray;
 
-        Stack newStack = new Stack();
+        final Stack newStack = new Stack();
         spField.set(newStack, sp);
         stackArrayField.set(newStack, stackArray);
+
+        final Field clkCounterField = clazz.getDeclaredField("clkCounter");
+        clkCounterField.setAccessible(true);
+        state.clkCounter = (Integer) clkCounterField.get(processor);
 
         state.stack = newStack;
         return state;

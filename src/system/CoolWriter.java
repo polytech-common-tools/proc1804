@@ -38,6 +38,9 @@ public final class CoolWriter implements StateWriter {
         for (PrintableValue printableValue : order) {
             builder.append("|");
             switch (printableValue) {
+                case N:
+                    builder.append(String.format("%4d", state.getClkCounter()));
+                    break;
                 case Y:
                     builder.append(state.getY());
                     break;
@@ -97,6 +100,10 @@ public final class CoolWriter implements StateWriter {
                 if (lineNum == 1) builder.append("|");
                 else builder.append("+");
                 switch (printableValue) {
+                    case N:
+                        if (lineNum == 1) builder.append(String.format("%4s", "#"));
+                        else builder.append("----");
+                        break;
                     case Y:
                     case F:
                     case Q:
@@ -151,6 +158,9 @@ public final class CoolWriter implements StateWriter {
         for (PrintableValue printableValue : order) {
             builder.append("+");
             switch (printableValue) {
+                case N:
+                    builder.append("----");
+                    break;
                 case Y:
                 case F:
                 case Q:

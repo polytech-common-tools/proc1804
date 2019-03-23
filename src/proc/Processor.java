@@ -23,6 +23,7 @@ public final class Processor {
     private ControlUnit controlUnit;
     private Register4 F;
     private Register4 Y;
+    private int clkCounter;
 
     /**
      * @param startAddress setting start address, program will start with this address
@@ -56,6 +57,7 @@ public final class Processor {
     /**
      */
     public void clk() {
+        clkCounter++;
         final Command command = programMemory.loadCommand(addressUnit.getNextAddress()); //Read command
         controlUnit.decodeAndDoEverything(command);
         addressUnit.countNextAddress(command.getMvAddr(), command.getMvType(), flags); //Count next address
