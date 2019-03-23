@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 // TODO
 public class Runner {
@@ -63,6 +64,13 @@ public class Runner {
                 System.out.println("<--- clk");
                 processor.clk();
                 statesHistory.add(ProcState.of(processor));
+            } else if (Pattern.matches("^(c|clk) [0-9]+", line)) {
+                int times = Integer.valueOf(line.split(" ")[1]);
+                System.out.println("<--- clk " + times + " times");
+                for (int i = 0; i < times; i++) {
+                    processor.clk();
+                    statesHistory.add(ProcState.of(processor));
+                }
             } else {
                 System.out.println("<--- NO command");
             }
