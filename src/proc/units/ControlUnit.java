@@ -93,7 +93,7 @@ public final class ControlUnit {
      * @param toRight if true shift to right, else - to left
      */
     private void shift(boolean MS1, boolean MS2, boolean toRight, boolean storeQ) {
-        if (MS1 && MS2) { // 11
+        if (MS2 && MS1) { // 11
             //combine F and Q
             Register8 tempReg = Register8.valueOf(F, regQUnit.loadQ());
             if (toRight) {
@@ -103,8 +103,8 @@ public final class ControlUnit {
             }
             //split tempReg into F and Q
             Y.set(tempReg.left4Bits());
-            if (storeQ) regQUnit.storeQ(tempReg.riht4Bits());
-        } else if (MS1 && !MS2) { //10
+            if (storeQ) regQUnit.storeQ(tempReg.right4Bits());
+        } else if (MS2 && !MS1) { //10
             //combine F and Q
             Register8 tempReg = Register8.valueOf(F, regQUnit.loadQ());
             if (toRight) {
@@ -114,7 +114,7 @@ public final class ControlUnit {
             }
             //split tempReg into F and Q
             Y.set(tempReg.left4Bits());
-            if (storeQ) regQUnit.storeQ(tempReg.riht4Bits());
+            if (storeQ) regQUnit.storeQ(tempReg.right4Bits());
         } else if (!MS2 && MS1) { //01
             Register4 Q = regQUnit.loadQ();
             if (toRight) {
