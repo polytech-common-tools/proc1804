@@ -16,7 +16,7 @@ public final class FileCommandsLoader implements CommandsLoader {
     public static final int MEMORY_SIZE = 256;
 
     public Command[] loadCommands(@NonNull final Reader reader) throws IOException {
-        final var strCommends = new String[MEMORY_SIZE];
+        final var strCommands = new String[MEMORY_SIZE];
         final var bufferedReader = new BufferedReader(reader);
         String inLine;
         int counter = 0;
@@ -24,7 +24,7 @@ public final class FileCommandsLoader implements CommandsLoader {
             if (counter >= MEMORY_SIZE) throw new IllegalArgumentException("You can't load more than 256 commands");
             final String outLine = transformLine(inLine);
             if (outLine == null) continue;
-            strCommends[counter] = outLine;
+            strCommands[counter] = outLine;
             counter++;
         }
 
@@ -32,7 +32,7 @@ public final class FileCommandsLoader implements CommandsLoader {
 
         var commandsObj = new Command[MEMORY_SIZE];
         for (int i = 0; i < counter; i++) {
-            commandsObj[i] = strToCommand(strCommends[i]);
+            commandsObj[i] = strToCommand(strCommands[i]);
         }
         //Fill the rest of memory with empty commands
         for (int i = counter; i < MEMORY_SIZE; i++) {
