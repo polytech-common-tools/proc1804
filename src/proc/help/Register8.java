@@ -16,11 +16,11 @@ public class Register8 extends AbstractRegister<Register8> {
     }
 
     public Register4 left4Bits() {
-        return Register4.valueOf(toString().substring(0, 3));
+        return Register4.valueOf(toString().substring(0, 4));
     }
 
-    public Register4 riht4Bits() {
-        return Register4.valueOf(toString().substring(4, 7));
+    public Register4 right4Bits() {
+        return Register4.valueOf(toString().substring(4, 8));
     }
 
     public static Register8 valueOf(@NonNull String str) {
