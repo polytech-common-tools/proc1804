@@ -30,6 +30,6 @@ public final class RegistersMemoryUnit {
      * @return register from passed address
      */
     public Register4 load(@NonNull Register4 address) {
-        return regs[(int) address.toLong()];
+        return regs[(int) address.toLong()].copy();
     }
 }
