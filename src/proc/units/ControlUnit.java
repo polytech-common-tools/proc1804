@@ -2,10 +2,7 @@ package proc.units;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import proc.help.Command;
-import proc.help.Register3;
-import proc.help.Register4;
-import proc.help.Register8;
+import proc.help.*;
 
 /**
  * TODO NEED TO SIMPLIFY
@@ -27,11 +24,13 @@ public final class ControlUnit {
     private Register4 Y;
 
     public void decodeAndDoEverything(@NonNull Command command) {
-        Register3 func = command.getFunc();
-
+        final Register3 func = command.getFunc();
+        //Get values from memory
+        final Register4 a = registersMemoryUnit.load(command.getA());
+        final Register4 b = registersMemoryUnit.load(command.getB());
         muxInputData.mux(command.getD(),
-                command.getA(),
-                command.getB(),
+                a,
+                b,
                 regQUnit.loadQ(),
                 command.getSrc());
         Register4 R = muxInputData.getR();
