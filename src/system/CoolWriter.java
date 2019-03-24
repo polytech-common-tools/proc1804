@@ -1,6 +1,7 @@
 package system;
 
 import lombok.NonNull;
+import proc.help.Flags;
 
 import java.io.File;
 import java.io.FileReader;
@@ -27,17 +28,19 @@ public final class CoolWriter implements StateWriter {
 
     @Override
     public void write(@NonNull ProcState state) throws IOException {
-        writer.write(getStringToWrite(state));
+        writer.write(getStringToWrite(state, null));
         writer.flush();
     }
 
     @Override
     public void write(@NonNull ProcState state, @NonNull Writer writer) throws IOException {
-        writer.write(getStringToWrite(state));
+        writer.write(getStringToWrite(state, null));
         writer.flush();
     }
 
-    private String getStringToWrite(@NonNull ProcState state) {
+    private String getStringToWrite(@NonNull ProcState state, Flags oldFlags) {
+        Flags flags = oldFlags;
+        if (oldFlags == null) flags = state.getFlags();
         var builder = new StringBuilder();
         for (PrintableValue printableValue : order) {
             builder.append("|");
@@ -61,16 +64,16 @@ public final class CoolWriter implements StateWriter {
                     builder.append(String.format("%4d", state.getCurrentAddress().toLong()));
                     break;
                 case OVR:
-                    builder.append(state.getFlags().isOVR() ? " 1 " : " 0 ");
+                    builder.append(flags.isOVR() ? " 1 " : " 0 ");
                     break;
                 case C4:
-                    builder.append(state.getFlags().isC4() ? " 1 " : " 0 ");
+                    builder.append(flags.isC4() ? " 1 " : " 0 ");
                     break;
                 case F3:
-                    builder.append(state.getFlags().isF3() ? " 1 " : " 0 ");
+                    builder.append(flags.isF3() ? " 1 " : " 0 ");
                     break;
                 case Z:
-                    builder.append(state.getFlags().isZ() ? " 1 " : " 0 ");
+                    builder.append(flags.isZ() ? " 1 " : " 0 ");
                     break;
                 case SP:
                     builder.append(String.format("%2d", state.getSp()));
@@ -293,5 +296,19 @@ public final class CoolWriter implements StateWriter {
             values.remove(i);
             values.addAll(i, PrintableValue.getAllFlags());
         }
+    }
+
+    //For flags delay
+    @Override
+    public void write(@NonNull ProcState state, @NonNull Flags flags) throws IOException {
+        writer.write(getStringToWrite(state, flags));
+        writer.flush();
+    }
+
+    //For flags delay
+    @Override
+    public void write(@NonNull ProcState state, @NonNull Writer writer, @NonNull Flags flags) throws IOException {
+        writer.write(getStringToWrite(state, flags));
+        writer.flush();
     }
 }

@@ -1,6 +1,7 @@
 package system;
 
 import lombok.NonNull;
+import proc.help.Flags;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -17,6 +18,11 @@ public interface StateWriter {
     void write(@NonNull ProcState state) throws IOException;
 
     void write(@NonNull ProcState state, @NonNull Writer writer) throws IOException;
+
+    //Two methods for flags delay
+    void write(@NonNull ProcState state, @NonNull Flags flags) throws IOException;
+
+    void write(@NonNull ProcState state, @NonNull Writer writer, @NonNull Flags flags) throws IOException;
 
     void writeFooter() throws IOException;
 
