@@ -260,7 +260,7 @@ public final class CoolWriter implements StateWriter {
         Set<PrintableValue> copies = new HashSet<>();
 
         for (PrintableValue value : values) {
-            if (copies.contains(value)) throw new IllegalArgumentException(value.toString() + "defined several times");
+            if (copies.contains(value)) throw new IllegalArgumentException(value.toString() + " is defined several times");
             copies.add(value);
             if (value.isSpecificReg()) specificReg = true;
             else if (value.isSpecificStack()) specificStack = true;
