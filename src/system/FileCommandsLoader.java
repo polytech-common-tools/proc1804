@@ -4,6 +4,8 @@ import lombok.NonNull;
 import proc.help.*;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Load file with only 0 and 1,
@@ -14,6 +16,12 @@ import java.io.*;
 public final class FileCommandsLoader implements CommandsLoader {
 
     public static final int MEMORY_SIZE = 256;
+    private Map<Integer, String> commentsMap;
+
+    @Override
+    public void setCommentsMap(@NonNull Map<Integer, String> commentsMap) {
+        this.commentsMap = commentsMap;
+    }
 
     public Command[] loadCommands(@NonNull final Reader reader) throws IOException {
         final var strCommands = new String[MEMORY_SIZE];
@@ -22,7 +30,8 @@ public final class FileCommandsLoader implements CommandsLoader {
         int counter = 0;
         while ((inLine = bufferedReader.readLine()) != null) {
             if (counter >= MEMORY_SIZE) throw new IllegalArgumentException("You can't load more than 256 commands");
-            final String outLine = transformLine(inLine);
+            //call trim to remove extra spaces at the beginning and at the end of string
+            final String outLine = transformLine(inLine.trim(), counter);
             if (outLine == null) continue;
             strCommands[counter] = outLine;
             counter++;
@@ -41,11 +50,17 @@ public final class FileCommandsLoader implements CommandsLoader {
         return commandsObj;
     }
 
-    private String transformLine(@NonNull String inputLine) {
+    private String transformLine(@NonNull String inputLine, int counter) {
         int commandLengthCounter = 0;
         byte bytes[] = inputLine.getBytes();
         var builder = new StringBuilder();
         //Line begins with # if it's a comment
+        //Double ## for printable comment
+        //check that there are more symbols than only ##
+        if (bytes.length > 2 && bytes[0] == '#' && bytes[1] == '#') {
+            if (commentsMap != null) commentsMap.put(counter, inputLine.substring(2).trim());
+            return null;
+        }
         if (bytes.length == 0 || bytes[0] == '#') return null;
         for (byte b : bytes) {
             if (b == ' ') continue;

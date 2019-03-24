@@ -23,7 +23,9 @@ public final class Processor {
     private ControlUnit controlUnit;
     private Register4 F;
     private Register4 Y;
+    //these two fields need only for debugging
     private int clkCounter;
+    private Register8 currentAddress;
 
     /**
      * @param startAddress setting start address, program will start with this address
@@ -43,6 +45,7 @@ public final class Processor {
         this.addressUnit = new AddressUnit(stack, startAddress);
 
         this.controlUnit = new ControlUnit(muxInputData, alu, regQUnit, registersMemoryUnit, F, Y);
+        currentAddress = addressUnit.getNextAddress();
     }
 
     /**
@@ -59,6 +62,7 @@ public final class Processor {
     public void clk() {
         clkCounter++;
         final Command command = programMemory.loadCommand(addressUnit.getNextAddress()); //Read command
+        currentAddress = addressUnit.getNextAddress().copy();
         controlUnit.decodeAndDoEverything(command);
         addressUnit.countNextAddress(command.getMvAddr(), command.getMvType(), flags); //Count next address
     }

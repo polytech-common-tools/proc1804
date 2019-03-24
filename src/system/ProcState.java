@@ -19,6 +19,7 @@ public final class ProcState {
     private Register4 F;
     private Register4 Q;
     private Register8 nextAddress;
+    private Register8 currentAddress;
     private Flags flags;
     private Register4 memory[];
     private Stack stack;
@@ -90,6 +91,10 @@ public final class ProcState {
         final Field clkCounterField = clazz.getDeclaredField("clkCounter");
         clkCounterField.setAccessible(true);
         state.clkCounter = (Integer) clkCounterField.get(processor);
+
+        final Field currentAddressField = clazz.getDeclaredField("currentAddress");
+        currentAddressField.setAccessible(true);
+        state.currentAddress = ((Register8) currentAddressField.get(processor)).copy();
 
         state.stack = newStack;
         return state;

@@ -17,10 +17,12 @@ public class Runner {
     private String help;
     private String welcome;
     private Processor processor;
+    private Map<Integer, String> comments;
 
     private Runner(@NonNull File file) throws IOException {
         prepare(file);
         Command[] commands = loadCommands();
+        stateWriter.setComments(comments);
         processor = new Processor(null);
         processor.storeProgram(commands);
     }
@@ -98,7 +100,9 @@ public class Runner {
     }
 
     private Command[] loadCommands() throws IOException {
+        comments = new HashMap<>();
         CommandsLoader commandsLoader = new FileCommandsLoader();
+        commandsLoader.setCommentsMap(comments);
         return commandsLoader.loadCommands(inputReader);
     }
 }

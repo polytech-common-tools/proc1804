@@ -7,12 +7,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
+import java.util.stream.Stream;
 
 //TODO SIMPLIFY IT
 public final class CoolWriter implements StateWriter {
 
     private List<PrintableValue> order;
     private Writer writer;
+    private Map<Integer, String> comments;
+    private boolean hasToComment;
+    private int commentLength = "comment".length();
 
     public CoolWriter(@NonNull File settings, @NonNull Writer writer) throws IOException {
         this.writer = writer;
@@ -50,8 +54,11 @@ public final class CoolWriter implements StateWriter {
                 case Q:
                     builder.append(state.getQ());
                     break;
-                case NEXTADDR:
+                case NEXT:
                     builder.append(String.format("%4d", state.getNextAddress().toLong()));
+                    break;
+                case ADDR:
+                    builder.append(String.format("%4d", state.getCurrentAddress().toLong()));
                     break;
                 case OVR:
                     builder.append(state.getFlags().isOVR() ? " 1 " : " 0 ");
@@ -67,6 +74,13 @@ public final class CoolWriter implements StateWriter {
                     break;
                 case SP:
                     builder.append(String.format("%2d", state.getSp()));
+                    break;
+                case COMMENT:
+                    if (hasToComment) {
+                        String comment = comments.get((int) state.getCurrentAddress().toLong());
+                        if (comment == null) comment = "";
+                        builder.append(String.format("%-" + commentLength + "s", comment));
+                    }
                     break;
                 default: {
                     if (printableValue.isSpecificStack()) {
@@ -117,13 +131,23 @@ public final class CoolWriter implements StateWriter {
                         if (lineNum == 1) builder.append(String.format("%3s", printableValue.toString()));
                         else builder.append("---");
                         break;
-                    case NEXTADDR:
+                    case NEXT:
+                        if (lineNum == 1) builder.append("next");
+                        else builder.append("----");
+                        break;
+                    case ADDR:
                         if (lineNum == 1) builder.append("addr");
                         else builder.append("----");
                         break;
                     case SP:
                         if (lineNum == 1) builder.append(String.format("%2s", "SP"));
                         else builder.append("--");
+                        break;
+                    case COMMENT:
+                        if (hasToComment) {
+                            if (lineNum == 1) builder.append(String.format("%-" + commentLength + "s", "comment"));
+                            else builder.append("-".repeat(commentLength));
+                        }
                         break;
                     default: {
                         if (printableValue.isSpecificStack()) {
@@ -173,11 +197,17 @@ public final class CoolWriter implements StateWriter {
                 case Z:
                     builder.append("---");
                     break;
-                case NEXTADDR:
+                case NEXT:
+                case ADDR:
                     builder.append("----");
                     break;
                 case SP:
                     builder.append("--");
+                    break;
+                case COMMENT:
+                    if (hasToComment) {
+                        builder.append("-".repeat(commentLength));
+                    }
                     break;
                 default: {
                     if (printableValue.isSpecificStack()) {
@@ -208,6 +238,16 @@ public final class CoolWriter implements StateWriter {
     @Override
     public void close() throws IOException {
         writer.close();
+    }
+
+    @Override
+    public void setComments(@NonNull Map<Integer, String> comments) {
+        if (!comments.isEmpty()) {
+            this.comments = comments;
+            Optional<Integer> reduced = comments.entrySet().stream().map(e -> e.getValue().length()).reduce(Math::max);
+            if (reduced.isPresent() && reduced.get() > commentLength) commentLength = reduced.get();
+            hasToComment = true;
+        }
     }
 
     private void checkValues(@NonNull List<PrintableValue> values) {

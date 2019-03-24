@@ -4,8 +4,11 @@ import lombok.NonNull;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Map;
 
 public interface StateWriter {
+
+    void setComments(@NonNull Map<Integer, String> comments);
 
     void writeHeader() throws IOException;
 
