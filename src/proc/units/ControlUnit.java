@@ -102,7 +102,7 @@ public final class ControlUnit {
                 Shifter.shift(tempReg, Shifter.Type.ARITHM_LEFT);
             }
             //split tempReg into F and Q
-            Y.set(tempReg.left4Bits());
+            F.set(tempReg.left4Bits());
             if (storeQ) regQUnit.storeQ(tempReg.right4Bits());
         } else if (MS2 && !MS1) { //10
             //combine F and Q
@@ -113,25 +113,25 @@ public final class ControlUnit {
                 Shifter.shift(tempReg, Shifter.Type.CYCLIC_LEFT);
             }
             //split tempReg into F and Q
-            Y.set(tempReg.left4Bits());
+            F.set(tempReg.left4Bits());
             if (storeQ) regQUnit.storeQ(tempReg.right4Bits());
         } else if (!MS2 && MS1) { //01
             Register4 Q = regQUnit.loadQ();
             if (toRight) {
-                Shifter.shift(Y, Shifter.Type.CYCLIC_RIGHT);
+                Shifter.shift(F, Shifter.Type.CYCLIC_RIGHT);
                 Shifter.shift(Q, Shifter.Type.CYCLIC_RIGHT);
             } else {
-                Shifter.shift(Y, Shifter.Type.CYCLIC_LEFT);
+                Shifter.shift(F, Shifter.Type.CYCLIC_LEFT);
                 Shifter.shift(Q, Shifter.Type.CYCLIC_LEFT);
             }
             if (storeQ) regQUnit.storeQ(Q);
         } else { //00
             Register4 Q = regQUnit.loadQ();
             if (toRight) {
-                Shifter.shift(Y, Shifter.Type.RIGHT);
+                Shifter.shift(F, Shifter.Type.RIGHT);
                 Shifter.shift(Q, Shifter.Type.RIGHT);
             } else {
-                Shifter.shift(Y, Shifter.Type.LEFT);
+                Shifter.shift(F, Shifter.Type.LEFT);
                 Shifter.shift(Q, Shifter.Type.LEFT);
             }
             if (storeQ) regQUnit.storeQ(Q);
