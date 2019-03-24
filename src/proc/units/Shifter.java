@@ -33,23 +33,23 @@ public final class Shifter {
     }
 
     private static void shiftRight(AbstractRegister register) {
-        register.shiftRight(1, false);
+        register.set(register.shiftRight(1, false));
     }
 
     private static void shiftLeft(AbstractRegister register) {
-        register.shiftLeft(1, false);
+        register.set(register.shiftLeft(1, false));
     }
 
     private static void shiftRightCyclic(AbstractRegister register) {
-        register.shiftRight(1, register.getRigthBit());
+        register.set(register.shiftRight(1, register.getRigthBit()));
     }
 
     private static void shiftLeftCyclic(AbstractRegister register) {
-        register.shiftLeft(1, register.getSign());
+        register.set(register.shiftLeft(1, register.getSign()));
     }
 
     private static void arithmShiftRight(AbstractRegister register) {
-        register.shiftRight(1, register.getSign());
+        register.set(register.shiftRight(1, register.getSign()));
     }
 
     private static void arithmShiftLeft(AbstractRegister register) {
