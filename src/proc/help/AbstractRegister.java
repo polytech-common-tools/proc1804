@@ -192,6 +192,17 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         return res;
     }
 
+    public void setF3andZ(@NonNull Flags flags) {
+        boolean zero = true;
+        for (boolean reg : regs) {
+            if (reg) {
+                zero = false;
+                break;
+            }
+        }
+        flags.setFlags(false, false, regs[0], zero);
+    }
+
     public void set(@NonNull T other) {
         if (this.regs.length != other.regs.length)
             throw new IllegalArgumentException("Registers must have the same length");
