@@ -41,18 +41,23 @@ public final class ALU {
                 break;
             case "011":
                 res = R.or(S);
+                res.setF3andZ(flags);
                 break;
             case "100":
                 res = R.and(S);
+                res.setF3andZ(flags);
                 break;
             case "101":
                 res = R.not().and(S);
+                res.setF3andZ(flags);
                 break;
             case "110":
                 res = R.xor(S);
+                res.setF3andZ(flags);
                 break;
             case "111":
                 res = R.xor(S).not();
+                res.setF3andZ(flags);
                 break;
             default:
                 throw new IllegalStateException("Unexpected state of OP");
