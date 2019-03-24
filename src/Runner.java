@@ -6,10 +6,7 @@ import system.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 // TODO
@@ -23,7 +20,7 @@ public class Runner {
 
     private Runner(@NonNull File file) throws IOException {
         prepare(file);
-        Command[] commands = loadCommends();
+        Command[] commands = loadCommands();
         processor = new Processor(null);
         processor.storeProgram(commands);
     }
@@ -100,7 +97,7 @@ public class Runner {
         welcome = Files.readAllLines(Path.of(welcomeFilePath)).stream().reduce("", (a, b) -> a + "\n" + b, String::concat);
     }
 
-    private Command[] loadCommends() throws IOException {
+    private Command[] loadCommands() throws IOException {
         CommandsLoader commandsLoader = new FileCommandsLoader();
         return commandsLoader.loadCommands(inputReader);
     }
