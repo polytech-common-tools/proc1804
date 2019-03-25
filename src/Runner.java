@@ -1,6 +1,7 @@
 import lombok.NonNull;
 import proc.Processor;
 import proc.help.Command;
+import proc.help.Flags;
 import system.*;
 
 import java.io.*;
@@ -50,13 +51,23 @@ public class Runner {
             } else if ("state".equals(line) || "s".equals(line)) {
                 System.out.println("<--- state");
                 stateWriter.writeHeader(outputStreamWriter);
-                stateWriter.write(ProcState.of(processor), outputStreamWriter);
+
+                final ProcState state = ProcState.of(processor);
+                final int clk = state.getClkCounter();
+                Flags flags = state.getFlags();
+                if (clk > 1) flags = statesHistory.get(clk - 1).getFlags();
+                stateWriter.write(state, outputStreamWriter, flags);
+
                 stateWriter.writeFooter(outputStreamWriter);
             } else if ("stateHistory".equals(line) || "sh".equals(line)) {
                 System.out.println("<--- stateHistory");
                 stateWriter.writeHeader(outputStreamWriter);
-                for (ProcState state : statesHistory) {
-                    stateWriter.write(state, outputStreamWriter);
+
+                for (int i = 0; i < statesHistory.size(); i++) {
+                    final ProcState state = statesHistory.get(i);
+                    Flags flags = state.getFlags();
+                    if (i > 0) flags = statesHistory.get(i - 1).getFlags();
+                    stateWriter.write(state, outputStreamWriter, flags);
                 }
                 stateWriter.writeFooter(outputStreamWriter);
             } else if ("clk".equals(line) || "c".equals(line)) {
@@ -77,9 +88,14 @@ public class Runner {
         }
         System.out.println("<--- exit");
         stateWriter.writeHeader();
-        for (ProcState state : statesHistory) {
-            stateWriter.write(state);
+
+        for (int i = 0; i < statesHistory.size(); i++) {
+            final ProcState state = statesHistory.get(i);
+            Flags flags = state.getFlags();
+            if (i > 0) flags = statesHistory.get(i - 1).getFlags();
+            stateWriter.write(state, flags);
         }
+
         stateWriter.writeFooter();
         stateWriter.close();
     }

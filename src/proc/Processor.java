@@ -63,7 +63,7 @@ public final class Processor {
         clkCounter++;
         final Command command = programMemory.loadCommand(addressUnit.getNextAddress()); //Read command
         currentAddress = addressUnit.getNextAddress().copy();
-        controlUnit.decodeAndDoEverything(command);
         addressUnit.countNextAddress(command.getMvAddr(), command.getMvType(), flags); //Count next address
+        controlUnit.decodeAndDoEverything(command);
     }
 }
