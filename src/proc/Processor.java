@@ -65,5 +65,6 @@ public final class Processor {
         currentAddress = addressUnit.getNextAddress().copy();
         addressUnit.countNextAddress(command.getMvAddr(), command.getMvType(), flags); //Count next address
         controlUnit.decodeAndDoEverything(command);
+        flags.unlock();
     }
 }

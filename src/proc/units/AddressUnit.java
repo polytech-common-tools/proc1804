@@ -31,6 +31,7 @@ public final class AddressUnit {
         if (!nextAddress.equals(Register8.ones())) nextAddress.increment(null);
         switch (mvType.toString()) {
             case "0000": //Переход на адрес из регистра микрокоманд, если Z = 0
+                flags.lock();
                 if (!flags.isZ()) {
                     nextAddress = mvAddress.copy();
                 } //We have already incremented nextAddress register
@@ -44,6 +45,7 @@ public final class AddressUnit {
             case "0011": //Переход на адрес, формируемый клавишным регистром адреса
                 throw new UnsupportedOperationException("This operation is not supported");
             case "0100": //Переход к подпрограмме, если Z = 0
+                flags.lock();
                 //TODO NEED TO CHECK
                 if (!flags.isZ()) {
                     stack.push(nextAddress);
@@ -62,17 +64,18 @@ public final class AddressUnit {
                 nextAddress = stack.pop();
                 stack.push(temp); //Put return address back into the stack
                 break;
-
             case "1000": //Окончить цикл и вытолкнуть из стека, если Z = 1
-                //TODO NEED TO CHECK
-                if (flags.isZ()) {
-                    stack.pop();
-                    //Move to next command (incremented)
-                } else {
-                    //NOT SURE ABOUT THIS
-                    nextAddress = mvAddress.copy();
-                }
-                break;
+                //TODO
+                throw new UnsupportedOperationException("Sorry for that:(");
+//                flags.lock();
+//                if (flags.isZ()) {
+//                    stack.pop();
+//                    //Move to next command (incremented)
+//                } else {
+//                    //NOT SURE ABOUT THIS
+//                    nextAddress = mvAddress.copy();
+//                }
+//                break;
             case "1001": //Загрузить стек и продолжить
                 stack.push(nextAddress);
                 //Just push and continue with next command (incremented)
@@ -85,15 +88,19 @@ public final class AddressUnit {
                 //TODO
                 throw new UnsupportedOperationException("Please contact Malik and make him support this move type");
             case "1100": //Переход на адрес из регистра микрокоманд, если Z = 1
+                flags.lock();
                 if (flags.isZ()) nextAddress = mvAddress.copy();
                 break;
             case "1101": //Переход на адрес из регистра микрокоманд, если F3 = 1
+                flags.lock();
                 if (flags.isF3()) nextAddress = mvAddress.copy();
                 break;
             case "1110": //Переход на адрес из регистра микрокоманд, если OVR = 1
+                flags.lock();
                 if (flags.isOVR()) nextAddress = mvAddress.copy();
                 break;
             case "1111": //Переход на адрес из регистра микрокоманд, если C4 = 1
+                flags.lock();
                 if (flags.isC4()) nextAddress = mvAddress.copy();
                 break;
             default:
