@@ -82,7 +82,9 @@ public final class CoolWriter implements StateWriter {
                     if (hasToComment) {
                         String comment = comments.get((int) state.getCurrentAddress().toLong());
                         if (comment == null) comment = "";
-                        builder.append(String.format("%-" + commentLength + "s", comment));
+                        if (state.getClkCounter() == 0) builder.append(" ".repeat(commentLength));
+                        else builder.append(String.format("%-" + commentLength + "s", comment));
+
                     }
                     break;
                 default: {
