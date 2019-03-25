@@ -1,7 +1,7 @@
 # Код Грея в двоичный
 # b = {REG0, Q}, result g = {REG1, REG2}
 ## Загрузка 0010 в REG0
-xxxx xxxx 0010 x011 x111 x011 xxxx 0000 0011
+xxxx xxxx 0010 x011 x111 x011 xxxx 0000 1000
 ## Загрузка 1111 в Q
 xxxx xxxx 0010 x000 x111 x011 xxxx xxxx 0000
 ## 	Загрузка 0000 в REG1
@@ -9,9 +9,9 @@ xxxx xxxx 0010 x011 x111 x011 xxxx 0001 0000
 ## 	Загрузка 0000 в REG2
 xxxx xxxx 0010 x011 x111 x011 xxxx 0010 0000
 #4 	Начинаем цикл
-## 	Сделать REG2 = !(REG2 xor Q)
+## 	Сделать REG2 = !(REGz2 xor Q)
 xxxx xxxx 0010 x011 x000 x110 0010 0010 xxxx
-## Сделать REG1 = !(REG1 xor REG0)
+## Сделать REG1 = !(REG1 xor REGz0)
 xxxx xxxx 0010 x011 x001 x110 0000 0001 xxxx
 ## Циклический сдвиг вправо {REG0, Q} / 2-> {REG0, Q}
 xxxx xxxx 0010 1100 0011 x011 xxxx 0000 xxxx
