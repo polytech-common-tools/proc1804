@@ -192,15 +192,17 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         return res;
     }
 
-    public void setF3andZ(@NonNull Flags flags) {
+    public static <T extends AbstractRegister<T>> void setFlags(@NonNull T op1, @NonNull T op2,
+                                                                @NonNull T res, @NonNull Flags flags) {
         boolean zero = true;
-        for (boolean reg : regs) {
+        for (boolean reg : res.regs) {
             if (reg) {
                 zero = false;
                 break;
             }
         }
-        flags.setFlags(false, false, regs[0], zero);
+        boolean ovr = (op1.regs[0] == op2.regs[0]) && res.regs[0];
+        flags.setFlags(ovr, flags.isC4(), res.regs[0], zero);
     }
 
     public void set(@NonNull T other) {
