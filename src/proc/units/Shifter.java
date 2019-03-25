@@ -52,7 +52,13 @@ public final class Shifter {
         register.set(register.shiftRight(1, register.getSign()));
     }
 
+    /**
+     * THIS SHIFTING IS INCORRECT
+     * BUT EMULATOR IN LABORATORY IN FUCKING POLYTECH
+     * DOES IT THIS WAY
+     * @param register
+     */
     private static void arithmShiftLeft(AbstractRegister register) {
-        shiftLeft(register);
+        register.set(register.shiftLeft(1, true));
     }
 }
