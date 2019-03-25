@@ -154,7 +154,7 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         if (flags != null) {
             boolean ovr = (this.regs[0] == other.regs[0]) & this.regs[0] != res.regs[0]; //overflow
             boolean f3 = res.regs[0]; //sign
-            flags.setFlags(ovr, c, f3, z);
+            flags.set(ovr, c, f3, z);
         }
         return res;
     }
@@ -187,7 +187,7 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         if (flags != null) {
             boolean ovr = (this.regs[0] == other.regs[0]) & this.regs[0] != res.regs[0]; //overflow
             boolean f3 = res.regs[0]; //sign
-            flags.setFlags(ovr, c, f3, z);
+            flags.set(ovr, c, f3, z);
         }
         return res;
     }
@@ -202,7 +202,7 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
             }
         }
         boolean ovr = (op1.regs[0] == op2.regs[0]) && res.regs[0];
-        flags.setFlags(ovr, flags.isC4(), res.regs[0], zero);
+        flags.set(ovr, flags.isC4(), res.regs[0], zero);
     }
 
     public void set(@NonNull T other) {

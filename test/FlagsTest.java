@@ -8,9 +8,9 @@ public class FlagsTest {
     @Test
     public void simple() {
         Flags flags1 = new Flags();
-        flags1.setFlags(true, false, true, true);
+        flags1.set(true, false, true, true);
         Flags flags2 = new Flags();
-        flags2.setFlags(true, true, false, true);
+        flags2.set(true, true, false, true);
         assertNotEquals(flags1.hashCode(), flags2.hashCode());
     }
 }

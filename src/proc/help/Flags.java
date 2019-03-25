@@ -18,7 +18,7 @@ public final class Flags {
         Z = z;
     }
 
-    public void setFlags(boolean OVR, boolean C4, boolean F3, boolean Z) {
+    public void set(boolean OVR, boolean C4, boolean F3, boolean Z) {
         if (lock) return;
         this.OVR = OVR;
         this.C4 = C4;
