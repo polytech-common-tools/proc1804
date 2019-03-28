@@ -27,9 +27,9 @@ public final class Stack {
      * @return a copy of the last address
      */
     public Register8 pop() {
-        if (sp < 0) throw new IllegalStateException("Stack is empty");
+        if (sp < 0) return stack[0].copy();
         final Register8 addr = stack[sp].copy();
-        if (sp != 0) sp--;
+        if (sp > 0) sp--;
         return addr;
     }
 }
