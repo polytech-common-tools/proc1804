@@ -34,23 +34,21 @@ public final class AddressUnit {
                 flags.lock();
                 if (!flags.isZ()) {
                     nextAddress = mvAddress.copy();
-                } //We have already incremented nextAddress register
+                }
                 break;
             case "0001": //Переход на адрес из регистра микрокоманд
                 nextAddress = mvAddress.copy();
                 break;
             case "0010": //Продолжить (переход на следующий адрес)
-                //We have already incremented nextAddress register
                 break;
             case "0011": //Переход на адрес, формируемый клавишным регистром адреса
                 throw new UnsupportedOperationException("This operation is not supported");
             case "0100": //Переход к подпрограмме, если Z = 0
                 flags.lock();
-                //TODO NEED TO CHECK
                 if (!flags.isZ()) {
                     stack.push(nextAddress);
                     nextAddress = mvAddress.copy();
-                } //We have already incremented nextAddress register
+                }
                 break;
             case "0101": //Переход к подпрограмме
                 stack.push(nextAddress);
@@ -62,30 +60,18 @@ public final class AddressUnit {
             case "0111": //Переход по стеку
                 var temp = nextAddress.copy();
                 nextAddress = stack.pop();
-                stack.push(temp); //Put return address back into the stack
+                stack.push(temp);
                 break;
             case "1000": //Окончить цикл и вытолкнуть из стека, если Z = 1
                 //TODO
-                throw new UnsupportedOperationException("Sorry for that:(");
-//                flags.lock();
-//                if (flags.isZ()) {
-//                    stack.pop();
-//                    //Move to next command (incremented)
-//                } else {
-//                    //NOT SURE ABOUT THIS
-//                    nextAddress = mvAddress.copy();
-//                }
-//                break;
+                throw new UnsupportedOperationException("Please contact Malik and make him support this move type");
             case "1001": //Загрузить стек и продолжить
                 stack.push(nextAddress);
-                //Just push and continue with next command (incremented)
                 break;
             case "1010": //Вытолкнуть из стека и продолжить
                 stack.pop();
-                //Just pop and continue with next command (incremented)
                 break;
             case "1011": //Окончить цикл и вытолкнуть из стека, если C4 = 1
-                //TODO
                 throw new UnsupportedOperationException("Please contact Malik and make him support this move type");
             case "1100": //Переход на адрес из регистра микрокоманд, если Z = 1
                 flags.lock();
