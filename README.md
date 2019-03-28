@@ -164,3 +164,23 @@ command:
 
 Таким образом работает эмулятор. Обо всех багах прошу сообщать незамедлительно. Пишите `issues`, а лучше 
 найдите причину ошибки, избавьтесь от нее и сделайте `pull request`.
+
+**Unit тесты:**
+- [ ] `AbstractRegister`
+- [ ] `Register8`
+- [ ] `Register4`
+- [ ] `Register3`
+- [ ] `Register`
+- [ ] `Command`
+- [ ] `Flags`
+- [ ] `AddressUnit`
+- [ ] `ALU`
+- [ ] `ControlUnit`
+- [ ] `MuxInputData`
+- [ ] `ProgramMemory`
+- [ ] `RegisterMemoryUnit`
+- [ ] `RegQUnit`
+- [ ] `Shifter`
+- [ ] `Stack`
+- [ ] `Processor`
+- [ ] `ProcState`
