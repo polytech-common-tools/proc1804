@@ -1,4 +1,7 @@
-# Эмулятор процессора 1804
+# Эмулятор процессора 1804 
+
+[![Build Status](https://travis-ci.org/Hiraev/proc1804.svg?branch=master)](https://travis-ci.org/Hiraev/proc1804)
+
 При запуске требуется передать путь к настроечному файлу, который лежит в resources/settings.cfg
 
 Требования:
@@ -190,6 +193,6 @@ command:
 - [ ] `RegisterMemoryUnit`
 - [ ] `RegQUnit`
 - [ ] `Shifter`
-- [ ] `Stack`
+- [x] `Stack`
 - [ ] `Processor`
 - [ ] `ProcState`
