@@ -30,7 +30,7 @@ public class Runner {
 
     public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException {
         if (args.length < 1) throw new IllegalArgumentException("Please pass the path to the configuration file");
-        UpdatesChecker.checkUpdates();
+
         Runner runner = new Runner(new File(args[0]));
         runner.run();
     }
