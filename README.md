@@ -3,10 +3,11 @@
 [![Build Status](https://travis-ci.org/Hiraev/proc1804.svg?branch=master)](https://travis-ci.org/Hiraev/proc1804)
 [![codecov](https://codecov.io/gh/Hiraev/proc1804/branch/master/graph/badge.svg)](https://codecov.io/gh/Hiraev/proc1804)
 
-При запуске требуется передать путь к настроечному файлу, который лежит в resources/settings.cfg
+При запуске требуется передать путь к настроечному файлу, который лежит в _resources/settings.cfg_.
 
 Требования:
 - [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
+- плагин `lombok` (для посветки генерируемого перед компиляцией кода)
 
 **Некоторые особенности работы процессора**
 
