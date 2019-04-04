@@ -7,7 +7,7 @@
 
 Требования:
 - [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
-- плагин `lombok` (для посветки генерируемого перед компиляцией кода)
+- `опционально` плагин [lombok](https://plugins.jetbrains.com/plugin/6317-lombok) (для посветки генерируемого перед компиляцией кода)
 
 **Некоторые особенности работы процессора**
 
