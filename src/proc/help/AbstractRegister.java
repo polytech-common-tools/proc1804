@@ -2,6 +2,7 @@ package proc.help;
 
 import lombok.NonNull;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
@@ -12,7 +13,9 @@ import java.util.function.BiFunction;
  */
 public abstract class AbstractRegister<T extends AbstractRegister> {
 
-    protected boolean regs[];
+    protected boolean[] regs;
+
+    protected abstract T createInstance();
 
     protected AbstractRegister(int size) {
         if (size <= 0) throw new IllegalArgumentException("Size must be at least 1");
@@ -20,7 +23,25 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         Arrays.fill(regs, false);
     }
 
-    protected abstract T createInstance();
+    public static <T extends AbstractRegister> T ones(Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            Arrays.fill(instance.regs, true);
+            return instance;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public static <T extends AbstractRegister> T valueOf(@NonNull String str, Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            instance.regs = boolValueOf(str);
+            return instance;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException();
+        }
+    }
 
     private enum LOGICAL_OP {AND, OR, XOR, NAND, NOR, XNOR}
 
@@ -49,7 +70,7 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
     }
 
     public T not() {
-        boolean res[] = new boolean[regs.length];
+        boolean[] res = new boolean[regs.length];
         for (int i = 0; i < regs.length; i++) {
             res[i] = !regs[i];
         }

@@ -2,12 +2,12 @@ package proc.help;
 
 import lombok.NonNull;
 
-import java.util.Arrays;
-
 public class Register3 extends AbstractRegister<Register3> {
 
+    private static final int size = 3;
+
     public Register3() {
-        super(3);
+        super(size);
     }
 
     @Override
@@ -15,16 +15,11 @@ public class Register3 extends AbstractRegister<Register3> {
         return new Register3();
     }
 
-    public static Register3 valueOf(@NonNull String str) {
-        if (str == null || str.length() != 3) throw new IllegalArgumentException("Input string length must be 3");
-        var reg = new Register3();
-        reg.regs = boolValueOf(str);
-        return reg;
+    public static Register3 ones() {
+        return AbstractRegister.ones(Register3.class);
     }
 
-    public static Register3 ones() {
-        var reg = new Register3();
-        Arrays.fill(reg.regs, true);
-        return reg;
+    public static Register3 valueOf(@NonNull String str) {
+        return AbstractRegister.valueOf(str, Register3.class);
     }
 }

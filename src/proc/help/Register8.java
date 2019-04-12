@@ -2,12 +2,12 @@ package proc.help;
 
 import lombok.NonNull;
 
-import java.util.Arrays;
-
 public class Register8 extends AbstractRegister<Register8> {
 
+    private static final int size = 8;
+
     public Register8() {
-        super(8);
+        super(size);
     }
 
     @Override
@@ -16,27 +16,22 @@ public class Register8 extends AbstractRegister<Register8> {
     }
 
     public Register4 left4Bits() {
-        return Register4.valueOf(toString().substring(0, 4));
+        return Register4.valueOf(toString().substring(0, 4), Register4.class);
     }
 
     public Register4 right4Bits() {
-        return Register4.valueOf(toString().substring(4, 8));
-    }
-
-    public static Register8 valueOf(@NonNull String str) {
-        if (str == null || str.length() != 8) throw new IllegalArgumentException("Input string length must be 4");
-        var reg = new Register8();
-        reg.regs = boolValueOf(str);
-        return reg;
-    }
-
-    public static Register8 ones() {
-        var reg = new Register8();
-        Arrays.fill(reg.regs, true);
-        return reg;
+        return Register4.valueOf(toString().substring(4, 8), Register4.class);
     }
 
     public static Register8 valueOf(@NonNull Register4 leftBits, @NonNull Register4 rightBits) {
-        return Register8.valueOf(leftBits.toString() + rightBits.toString());
+        return Register8.valueOf(leftBits.toString() + rightBits.toString(), Register8.class);
+    }
+
+    public static Register8 valueOf(@NonNull String str) {
+        return AbstractRegister.valueOf(str, Register8.class);
+    }
+
+    public static Register8 ones() {
+        return AbstractRegister.ones(Register8.class);
     }
 }
