@@ -23,18 +23,24 @@ public abstract class AbstractRegister<T extends AbstractRegister> {
         Arrays.fill(regs, false);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T extends AbstractRegister> T ones(int size) {
-        var reg = new Register(size);
-        Arrays.fill(reg.regs, true);
-        return (T) reg;
+    public static <T extends AbstractRegister> T ones(Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            Arrays.fill(instance.regs, true);
+            return instance;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException();
+        }
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T extends AbstractRegister> T valueOf(@NonNull String str) {
-        var reg = new Register(str.length());
-        reg.regs = boolValueOf(str);
-        return (T) reg;
+    public static <T extends AbstractRegister> T valueOf(@NonNull String str, Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            instance.regs = boolValueOf(str);
+            return instance;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException();
+        }
     }
 
     private enum LOGICAL_OP {AND, OR, XOR, NAND, NOR, XNOR}

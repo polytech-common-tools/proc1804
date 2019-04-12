@@ -13,31 +13,31 @@ import lombok.NonNull;
 public class Command {
     @NonNull
     @Builder.Default
-    private Register8 mvAddr = new Register8();
+    private Register8 mvAddr;
     @NonNull
     @Builder.Default
-    private Register4 mvType = new Register4();
+    private Register4 mvType;
     private boolean MS2;
     @NonNull
     @Builder.Default
-    private Register3 dest = new Register3();
+    private Register3 dest;
     private boolean MS1;
     @NonNull
     @Builder.Default
-    private Register3 src = new Register3();
+    private Register3 src;
     private boolean C0;
     @NonNull
     @Builder.Default
-    private Register3 func = new Register3();
+    private Register3 func;
     @NonNull
     @Builder.Default
-    private Register4 A = new Register4();
+    private Register4 A;
     @NonNull
     @Builder.Default
-    private Register4 B = new Register4();
+    private Register4 B;
     @NonNull
     @Builder.Default
-    private Register4 D = new Register4();
+    private Register4 D;
 
     public static final int SIZE = 36;
 

@@ -1,5 +1,7 @@
 package proc.help;
 
+import lombok.NonNull;
+
 public class Register3 extends AbstractRegister<Register3> {
 
     private static final int size = 3;
@@ -14,6 +16,10 @@ public class Register3 extends AbstractRegister<Register3> {
     }
 
     public static Register3 ones() {
-        return AbstractRegister.ones(size);
+        return AbstractRegister.ones(Register3.class);
+    }
+
+    public static Register3 valueOf(@NonNull String str) {
+        return AbstractRegister.valueOf(str, Register3.class);
     }
 }
