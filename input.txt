@@ -1,4 +1,4 @@
 xxxx xxxx 0010 x011 x111 x011 xxxx 0000 0010
 xxxx xxxx 0010 x000 x111 x011 xxxx xxxx 1111
-xxxx xxxx 0010 x011 x111 x011 xxxx 0001 0000
+xxxx xxxх 0010 x011 x111 x011 xxxx 0001 0000
 
