@@ -66,7 +66,7 @@ public final class FileCommandsLoader implements CommandsLoader {
         for (byte b : bytes) {
             if (b == ' ') continue;
             if (b != 'x' && b != '0' && b != '1')
-                throw new IllegalArgumentException(String.format("Illegal symbol: %c, on line: %d", b, counter + 1));
+                throw new IllegalArgumentException(String.format("Illegal symbol: %c, in command: %d", b, counter));
             if (b == '1') builder.append("1");
             else builder.append("0");
             commandLengthCounter++;
