@@ -72,7 +72,7 @@ public final class FileCommandsLoader implements CommandsLoader {
             commandLengthCounter++;
         }
         if (commandLengthCounter != COMMAND_LENGTH)
-            throw new IllegalArgumentException("Command length must be " + COMMAND_LENGTH + " 36, " + inputLine);
+            throw new IllegalArgumentException("Command length must be " + COMMAND_LENGTH + " " + inputLine);
         return builder.toString();
     }
 
