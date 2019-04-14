@@ -16,6 +16,7 @@ import java.util.Map;
 public final class FileCommandsLoader implements CommandsLoader {
 
     public static final int MEMORY_SIZE = 256;
+    private static final int COMMAND_LENGTH = 36;
     private Map<Integer, String> commentsMap;
 
     @Override
@@ -52,7 +53,7 @@ public final class FileCommandsLoader implements CommandsLoader {
 
     private String transformLine(@NonNull String inputLine, int counter) {
         int commandLengthCounter = 0;
-        byte bytes[] = inputLine.getBytes();
+        byte[] bytes = inputLine.getBytes();
         var builder = new StringBuilder();
         //Line begins with # if it's a comment
         //Double ## for printable comment
@@ -65,13 +66,13 @@ public final class FileCommandsLoader implements CommandsLoader {
         for (byte b : bytes) {
             if (b == ' ') continue;
             if (b != 'x' && b != '0' && b != '1')
-                throw new IllegalArgumentException(String.format("Illegal symbol: %c", b));
+                throw new IllegalArgumentException(String.format("Illegal symbol: %c, on line: %d", b, counter + 1));
             if (b == '1') builder.append("1");
             else builder.append("0");
             commandLengthCounter++;
         }
-        if (commandLengthCounter != 36)
-            throw new IllegalArgumentException("Command length must be 36, " + inputLine);
+        if (commandLengthCounter != COMMAND_LENGTH)
+            throw new IllegalArgumentException("Command length must be " + COMMAND_LENGTH + " 36, " + inputLine);
         return builder.toString();
     }
 
