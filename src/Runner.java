@@ -5,6 +5,7 @@ import proc.help.Flags;
 import system.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -13,7 +14,6 @@ import java.util.regex.Pattern;
 // TODO
 public class Runner {
     private Reader inputReader;
-    private Writer outputWriter;
     private StateWriter stateWriter;
     private String help;
     private String welcome;
@@ -30,7 +30,6 @@ public class Runner {
 
     public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException {
         if (args.length < 1) throw new IllegalArgumentException("Please pass the path to the configuration file");
-
         Runner runner = new Runner(new File(args[0]));
         runner.run();
     }
@@ -108,8 +107,8 @@ public class Runner {
         final String writeSettingsFilePath = properties.getProperty("writer");
         final String helpFilePath = properties.getProperty("help");
         final String welcomeFilePath = properties.getProperty("welcome");
-        outputWriter = new FileWriter(new File(outputFilePath));
-        inputReader = new FileReader(new File(inputFilePath));
+        Writer outputWriter = new FileWriter(new File(outputFilePath));
+        inputReader = new InputStreamReader(new FileInputStream(inputFilePath), StandardCharsets.UTF_8);
         stateWriter = new CoolWriter(new File(writeSettingsFilePath), outputWriter);
         help = Files.readAllLines(Path.of(helpFilePath)).stream().reduce("", (a, b) -> a + "\n" + b, String::concat);
         welcome = Files.readAllLines(Path.of(welcomeFilePath)).stream().reduce("", (a, b) -> a + "\n" + b, String::concat);
