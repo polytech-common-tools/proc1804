@@ -1,13 +1,13 @@
 # Эмулятор процессора 1804 
 
-[![Build Status](https://travis-ci.org/Hiraev/proc1804.svg?branch=master)](https://travis-ci.org/Hiraev/proc1804)
+[![Build Status](https://travis-ci.org/polytech-common-tools/proc1804.svg?branch=master)](https://travis-ci.org/polytech-common-tools/proc1804)
 [![codecov](https://codecov.io/gh/Hiraev/proc1804/branch/master/graph/badge.svg)](https://codecov.io/gh/Hiraev/proc1804)
 
 При запуске требуется передать путь к настроечному файлу, который лежит в _resources/settings.cfg_.
 
 Требования:
 - [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
-- `опционально` плагин [lombok](https://plugins.jetbrains.com/plugin/6317-lombok) (для посветки генерируемого перед компиляцией кода)
+- `опционально` плагин [lombok](https://plugins.jetbrains.com/plugin/6317-lombok) (для подсветки генерируемого перед компиляцией кода)
 
 **Некоторые особенности работы процессора**
 
@@ -28,7 +28,7 @@
 Формат команды микропроцессора 1804 можно посмотреть в [wiki этого проекта](https://github.com/Hiraev/proc1804/wiki).
 
 ## Настроечный файл
-Настроечный файл содержит следющие поля: 
+Настроечный файл содержит следующие поля: 
 1. `input` - файл с программой;
 2. `output` - файл для записи информации о состоянии регистров;
 3. `writer` - файл настройки печати;
