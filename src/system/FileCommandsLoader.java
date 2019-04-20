@@ -35,15 +35,13 @@ public final class FileCommandsLoader implements CommandsLoader {
         final AtomicInteger counter = new AtomicInteger(0);
         try (final var bufferedReader = new BufferedReader(reader)) {
             bufferedReader.lines()
-                    .filter(Objects::nonNull)
                     .forEach(line -> {
                         if (counter.get() >= MEMORY_SIZE)
                             throw new IllegalArgumentException("You can't load more than 256 commands");
                         //call trim to remove extra spaces at the beginning and at the end of string
                         final String outLine = transformLine(line.trim(), counter.get());
                         if (outLine != null) {
-                            strCommands[counter.get()] = outLine;
-                            counter.incrementAndGet();
+                            strCommands[counter.incrementAndGet()] = outLine;
                         }
                     });
         }
