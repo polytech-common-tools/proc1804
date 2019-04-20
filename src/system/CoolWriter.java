@@ -89,9 +89,11 @@ public final class CoolWriter implements StateWriter {
                     break;
                 default: {
                     if (printableValue.isSpecificStack()) {
-                        builder.append(state.getStackArray()[printableValue.ordinal() - PrintableValue.STACK0.ordinal()]);
+                        builder.append(state.getStackArray()[printableValue.ordinal()
+                                - PrintableValue.STACK0.ordinal()]);
                     } else if (printableValue.isSpecificReg()) {
-                        builder.append(" " + state.getMemory()[printableValue.ordinal() - PrintableValue.REG0.ordinal()]);
+                        builder.append(" ").append(state.getMemory()[printableValue.ordinal()
+                                - PrintableValue.REG0.ordinal()]);
                     } else throw new IllegalStateException();
                 }
             }
@@ -234,9 +236,8 @@ public final class CoolWriter implements StateWriter {
         String[] values = property.split(":");
 
         var propertiesList = new ArrayList<PrintableValue>();
-        for (String value : values) {
-            propertiesList.add(PrintableValue.valueOf(value));
-        }
+        Arrays.stream(values)
+                .forEach(value -> propertiesList.add(PrintableValue.valueOf(value)));
         return propertiesList;
     }
 
@@ -249,8 +250,8 @@ public final class CoolWriter implements StateWriter {
     public void setComments(@NonNull Map<Integer, String> comments) {
         if (!comments.isEmpty()) {
             this.comments = comments;
-            Optional<Integer> reduced = comments.entrySet().stream().map(e -> e.getValue().length()).reduce(Math::max);
-            if (reduced.isPresent() && reduced.get() > commentLength) commentLength = reduced.get();
+            Optional<Integer> reduced = comments.values().stream().map(String::length).reduce(Math::max);
+            if (reduced.get() > commentLength) commentLength = reduced.get();
             hasToComment = true;
         }
     }
@@ -265,7 +266,8 @@ public final class CoolWriter implements StateWriter {
         Set<PrintableValue> copies = new HashSet<>();
 
         for (PrintableValue value : values) {
-            if (copies.contains(value)) throw new IllegalArgumentException(value.toString() + " is defined several times");
+            if (copies.contains(value))
+                throw new IllegalArgumentException(value.toString() + " is defined several times");
             copies.add(value);
             if (value.isSpecificReg()) specificReg = true;
             else if (value.isSpecificStack()) specificStack = true;
