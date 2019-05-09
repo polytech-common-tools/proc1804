@@ -11,7 +11,7 @@ import java.net.URL;
 public class UpdatesChecker {
 
     private static final String currentTag = "v1.0.0";
-    private static final String address = "https://api.github.com/polytech-common-tools/proc1804/releases/latest";
+    private static final String address = "https://api.github.com/repos/polytech-common-tools/proc1804/releases/latest";
     private static final String releases_url = "https://github.com/polytech-common-tools/proc1804/releases";
     private static final int MAX_CONNECTION_TIMEOUT = 7000;
 
