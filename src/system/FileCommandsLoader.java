@@ -41,7 +41,7 @@ public final class FileCommandsLoader implements CommandsLoader {
                         //call trim to remove extra spaces at the beginning and at the end of string
                         final String outLine = transformLine(line.trim(), counter.get());
                         if (outLine != null) {
-                            strCommands[counter.incrementAndGet()] = outLine;
+                            strCommands[counter.getAndIncrement()] = outLine;
                         }
                     });
         }
