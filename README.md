@@ -79,36 +79,40 @@ command:
 
 Пусть у нас есть следующая программа:
 
-_input.txt_
+_input/gray2bin.txt_
 
 ```bash
 # Этот комментарий будет проигнорирован
-## Загрузка 0010 в REG0
-xxxx xxxx 0010 x011 x111 x011 xxxx 0000 0011
-## Загрузка 1111 в Q
+# Код Грея в двоичный
+# b = {REG0, Q}, result g = {REG1, REG2}
+## Загрузка 1000 в REG0
+xxxx xxxx 0010 x011 x111 x011 xxxx 0000 1000
+## Загрузка 0000 в Q
 xxxx xxxx 0010 x000 x111 x011 xxxx xxxx 0000
 ## 	Загрузка 0000 в REG1
 xxxx xxxx 0010 x011 x111 x011 xxxx 0001 0000
 ## 	Загрузка 0000 в REG2
 xxxx xxxx 0010 x011 x111 x011 xxxx 0010 0000
 #4 	Начинаем цикл
-## 	Сделать REG2 = !(REG2 xor Q)
+## 	Сделать REG2 = !(REGz2 xor Q)
 xxxx xxxx 0010 x011 x000 x110 0010 0010 xxxx
-## Сделать REG1 = !(REG1 xor REG0)
+## Сделать REG1 = !(REG1 xor REGz0)
 xxxx xxxx 0010 x011 x001 x110 0000 0001 xxxx
 ## Циклический сдвиг вправо {REG0, Q} / 2-> {REG0, Q}
 xxxx xxxx 0010 1100 0011 x011 xxxx 0000 xxxx
 ## REG0 = REG0 & 0111 (маска), дальше
 xxxx xxxx 0010 x011 x101 x100 0000 0000 0111
-#8 Выполняем ИЛИ REG0 or Q чтобы узнать ноль или нет
+#8 Выполняем REG0 or Q чтобы узнать ноль или нет
+## REG0 or Q, don't write, just for Z flag
+xxxx xxxx 0010 x001 x000 x011 0000 xxxx xxxx
 ## Перейти в 4, если Z = 0
 0000 0100 0000 x001 x000 x011 0000 xxxx xxxx
-#9
+#10
 ## Y = REG0
 xxxx xxxx 0010 x011 x011 x011 xxxx 0000 xxxx
-#10
-## Y = REG1, перейти в 11
-0000 1001 0001 x011 x011 x011 xxxx 0001 xxxx
+#11
+## Y = REG1, перейти в 10
+0000 1010 0001 x011 x011 x011 xxxx 0001 xxxx
 ```
 
 Настроечный файл вывода выглядит следующим образом:
